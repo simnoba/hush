@@ -96,6 +96,7 @@
       mode = "0440";
     };
     # KNOT_MASTER_KEY=<base64>; 
+    # KNOT_ADMIN_SECRET=<base16>; 
     "knot-env".file = ../secrets/knot-env.age;
   };
 
@@ -117,6 +118,8 @@
       git.object_format = "sha1";
       atproto.plc_directory = "https://plc.directory";
       contact.email = "admin@plue.space";
+      # enables `knot-server admin ...` (members, invites, bans); value lives in knot-env.age
+      acl.legacy_admin_secret_env = "KNOT_ADMIN_SECRET";
       xrpc = {
         trusted_proxy_header = "x-forwarded-for";
         trusted_proxies = ["127.0.0.1" "::1"];
