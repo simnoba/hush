@@ -1,0 +1,21 @@
+# Nix build outputs
+result
+result-*
+
+# direnv
+.direnv/
+
+# NixOS VM test artifacts
+*.qcow2
+
+# Never commit decrypted secrets; only *.age files belong in secrets/
+secrets/*
+!secrets/*.age
+!secrets/*.nix
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
