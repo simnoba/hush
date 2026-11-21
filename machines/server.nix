@@ -95,56 +95,34 @@
       group = "cloudflared-secret";
       mode = "0440";
     };
+    # KNOT_MASTER_KEY=<base64>; back this up, losing it loses control of the repos
+    "knot-env".file = ../secrets/knot-env.age;
   };
 
-  # services.tangled.knot-rs = {
-  #   enable = true;
-  #   environmentFile = "/etc/knot/knot.env";
-  #   settings = {
-  #     server = {
-  #       hostname = "knot.oyster.cafe";
-  #       admins = ["did:plc:usucbdwz7frtkxjzxqtdtulu"];
-  #       ssh_listen_addr = "[::]:22";
-  #       appview_endpoint = "http://127.0.0.1:3000";
-  #     };
-  #     git.object_format = "sha256";
-  #     atproto.plc_directory = "https://plc.directory";
-  #     xrpc = {
-  #       trusted_proxy_header = "x-forwarded-for";
-  #       trusted_proxies = ["127.0.0.1" "::1"];
-  #     };
-  #   };
-  # };
-  services.openssh.ports = [2200];
+  # Frontend is tangled.org: register knot.plue.space under Settings → Knots there.
+  # HTTP (127.0.0.1:5555) is exposed through the cloudflared tunnel.
+  services.tangled.knot-rs = {
+    enable = true;
+    environmentFile = config.age.secrets."knot-env".path;
+    settings = {
+      server = {
+        hostname = "knot.plue.space";
+        admins = [
+          "did:plc:usucbdwz7frtkxjzxqtdtulu"
+        ];
+        # git over ssh on the standard port; the system sshd lives on 2200
+        ssh_listen_addr = "[::]:22";
+      };
+      atproto.plc_directory = "https://plc.directory";
+      contact.email = "admin@plue.space";
+      xrpc = {
+        trusted_proxy_header = "x-forwarded-for";
+        trusted_proxies = ["127.0.0.1" "::1"];
+      };
+    };
+  };
 
-  # services.tangled.appview = {
-  #   enable = true;
-  #   dev = true;
-  #   appviewHost = "127.0.0.1:3000";
-  #   appviewName = "Hush";
-  #   listenAddr = "127.0.0.1:3000";
-  #   metricsListenAddr = "127.0.0.1:9090";
-  #   redis.addr = "127.0.0.1:6379";
-  #   environmentFile = "/etc/tangled/appview.env";
-  # };
-
-  # Development mode reads templates and static assets from the working directory.
-  # systemd.services.appview.preStart = ''
-  #   mkdir -p appview/pages
-  #   ln -sfn ${inputs.tangled}/appview/pages/templates appview/pages/templates
-  #   ln -sfn ${inputs.tangled.packages.${pkgs.stdenv.hostPlatform.system}.appview-static-files} appview/pages/static
-  # '';
-
-  #services.caddy = {
-  #  enable = true;
-  #  virtualHosts = {
-  #    "knot.oyster.cafe" = {
-  #      extraConfig = ''
-  #        reverse_proxy 127.0.0.1:5555
-  #      '';
-  #    };
-  #  };
-  #};
+  services.openssh.ports = [22 2200];
 
   virtualisation.docker.enable = true;
 
