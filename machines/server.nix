@@ -95,7 +95,7 @@
       group = "cloudflared-secret";
       mode = "0440";
     };
-    # KNOT_MASTER_KEY=<base64>; back this up, losing it loses control of the repos
+    # KNOT_MASTER_KEY=<base64>; 
     "knot-env".file = ../secrets/knot-env.age;
   };
 
@@ -113,6 +113,8 @@
         # git over ssh on the standard port; the system sshd lives on 2200
         ssh_listen_addr = "[::]:22";
       };
+      # sha1 so existing repos and GitHub mirrors can push/fetch; only affects newly created repos
+      git.object_format = "sha1";
       atproto.plc_directory = "https://plc.directory";
       contact.email = "admin@plue.space";
       xrpc = {
@@ -122,7 +124,7 @@
     };
   };
 
-  services.openssh.ports = [22 2200];
+  services.openssh.ports = [2200];
 
   virtualisation.docker.enable = true;
 
