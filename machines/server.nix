@@ -114,8 +114,6 @@
         # git over ssh on the standard port; the system sshd lives on 2200
         ssh_listen_addr = "[::]:22";
       };
-      # sha1 so existing repos and GitHub mirrors can push/fetch; only affects newly created repos
-      git.object_format = "sha1";
       atproto.plc_directory = "https://plc.directory";
       contact.email = "admin@plue.space";
       # enables `knot-server admin ...` (members, invites, bans); value lives in knot-env.age
