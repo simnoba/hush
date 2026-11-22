@@ -95,8 +95,8 @@
       group = "cloudflared-secret";
       mode = "0440";
     };
-    # KNOT_MASTER_KEY=<base64>; 
-    # KNOT_ADMIN_SECRET=<base16>; 
+    # KNOT_MASTER_KEY=<base64>;
+    # KNOT_ADMIN_SECRET=<base16>;
     "knot-env".file = ../secrets/knot-env.age;
   };
 
@@ -149,7 +149,8 @@
 
 
     containers."cloudflared-tunnel" = {
-      image = "cloudflare/cloudflared";
+      image = "cloudflare/cloudflared:latest";
+      pull = "always";
       autoStart = true;
 
       extraOptions = [
