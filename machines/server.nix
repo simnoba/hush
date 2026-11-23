@@ -147,19 +147,18 @@
       ];
     };
 
-
     containers."cloudflared-tunnel" = {
       image = "cloudflare/cloudflared:latest";
       pull = "always";
       autoStart = true;
 
       extraOptions = [
-          "--network=host"
-        ];
+        "--network=host"
+      ];
 
       volumes = [
-            "${config.age.secrets."cloudflared-tunnel-token".path}:/run/secrets/api-token:ro"
-          ];
+        "${config.age.secrets."cloudflared-tunnel-token".path}:/run/secrets/api-token:ro"
+      ];
       cmd = ["tunnel" "--no-autoupdate" "run" "--token-file" "/run/secrets/api-token"];
     };
   };
