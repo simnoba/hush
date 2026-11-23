@@ -12,12 +12,11 @@
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
 
     tangled.url = "git+https://tangled.org/tangled.org/core";
-
   };
 
   outputs = inputs:
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["aarch64-darwin" "x86_64-darwin" "x86_64-linux"];
+      systems = ["aarch64-darwin" "aarch64-linux" "x86_64-linux"];
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -71,10 +70,9 @@
             };
             listNixFilesRecursive = path:
               builtins.filter (lib.hasSuffix ".nix") (map toString (lib.filesystem.listFilesRecursive path));
-          in
-            [];
-            #map import (listNixFilesRecursive ./overlays)
-            #++ map (compose mkCustomPackage import) (listNixFilesRecursive ./packages);
+          in [];
+          #map import (listNixFilesRecursive ./overlays)
+          #++ map (compose mkCustomPackage import) (listNixFilesRecursive ./packages);
         };
       };
     };
