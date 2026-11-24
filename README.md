@@ -8,11 +8,17 @@ NixOS flake configuration for the `hush` server.
 sudo nixos-rebuild switch --flake .#hush
 ```
 
+We use [nh](https://github.com/nix-community/nh) (nix-helper) to build and deploy the config:
+
+```sh
+nh os switch --target-host <host> -H hush
+```
+
 ## Layout
 
 - `hosts/<name>/` – host configuration and hardware
-- `modules/` – system settings
-- `services/` – apps, one file each
+- `modules/` – system modules
+- `services/` – services, one file each
 - `secrets/` – [agenix](https://github.com/ryantm/agenix) encrypted secrets
 
 ## License
