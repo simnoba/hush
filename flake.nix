@@ -32,8 +32,7 @@
             modules = [
               inputs.agenix.nixosModules.default
               inputs.tangled.nixosModules.knot-rs
-              ./machines/server.nix
-              ./hardware/server.nix
+              ./hosts/hush
             ];
           };
         };

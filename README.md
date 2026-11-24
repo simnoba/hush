@@ -10,9 +10,9 @@ sudo nixos-rebuild switch --flake .#hush
 
 ## Layout
 
-- `machines/` – host configuration
-- `hardware/` – hardware configuration
-- `modules/` – shared NixOS modules
+- `hosts/<name>/` – host configuration and hardware
+- `modules/` – system settings
+- `services/` – apps, one file each
 - `secrets/` – [agenix](https://github.com/ryantm/agenix) encrypted secrets
 
 ## License

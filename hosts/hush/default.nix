@@ -1,7 +1,8 @@
 {
   imports =
-    map (m: ../modules/${m}.nix) ["nix" "base" "users" "openssh" "docker"]
-    ++ map (s: ../services/${s}.nix) ["knot" "cloudflared" "core-keeper"];
+    [./hardware.nix]
+    ++ map (m: ../../modules/${m}.nix) ["nix" "base" "users" "openssh"]
+    ++ map (s: ../../services/${s}.nix) ["knot" "cloudflared" "core-keeper"];
 
   networking.hostName = "hush";
 

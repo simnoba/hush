@@ -45,6 +45,9 @@
     };
   };
 
+  virtualisation.docker.enable = true;
+  virtualisation.oci-containers.backend = "docker";
+
   # System ports
   networking.firewall.allowedTCPPorts = [53 80 443];
   networking.firewall.allowedUDPPorts = [53 443];
